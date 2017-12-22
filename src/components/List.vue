@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="i in getDataPoints"><span>{{i}} </span></div>
+    <div>{{getDataPoints.length}} data points added</div>
   </div>
 </template>
 

@@ -16,6 +16,13 @@ export default {
   },
   methods: mapActions([
       'addPointAsync'
-  ])
+  ]),
+  created () {
+        setInterval(() => {
+            let max = 15;
+            let min = 0;
+            this.addPointAsync(Math.random() * (max - min) + min);        
+        }, 3000)
+    },
 }
 </script>

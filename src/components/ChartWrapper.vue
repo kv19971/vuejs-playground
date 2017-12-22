@@ -1,65 +1,57 @@
 <template>
-  <canvas ref="chart" :width="300" :height="300"></canvas>
+  <highcharts :options="options" ref="highcharts"></highcharts>
 </template>
 
 <script>
-import Chart from 'chart.js'
+import Vue from 'vue'
+import VueHighcharts from 'vue-highcharts';
+Vue.use(VueHighcharts);
 
 export default {
-  name: 'vue-chart',
-
-  props: {
-    type: {
-      required: true,
-      type: String
-    },
-    data: {
-      required: true,
-      type: [Object, Array]
-    },
-    options: {
-      default:function (){ return {
-                  scales: {
-                      yAxes: [{
-                          ticks: {
-                              beginAtZero:true
-                          }
-                      }]
-                  }     
-            }},
-      type:Object}
+  components: {
+    VueHighcharts
   },
-
-  data: () => ({
-    chart: ''
-  }),
-
-  watch: {
-    'data.labels' () {
-      this.chart.update()
-    },
-
-    'data.datasets' () {
-      this.chart.update()
+  computed: {
+    
+    options () {
+      let dps = this.$store.getters.getDataPoints;
+      return {
+        title: {
+          text: 'Monthly Average Temperature',
+          x: -20 //center
+        },
+        subtitle: {
+          text: 'Source: WorldClimate.com',
+          x: -20
+        },
+        xAxis: {
+          categories: dps.map((val, i) => i)
+        },
+        yAxis: {
+          title: {
+            text: 'Temperature (°C)'
+          },
+          plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+          }]
+        },
+        tooltip: {
+          valueSuffix: '°C'
+        },
+        legend: {
+          layout: 'vertical',
+          align: 'right',
+          verticalAlign: 'middle',
+          borderWidth: 0
+        },
+        series: [{
+          name: 'Somedata',
+          data: dps
+        }]
+      }
     }
-  },
-
-  methods: {
-    createChart () {
-      this.chart = new Chart(this.$refs.chart, {
-        type: this.type,
-        data: this.data,
-        options: this.options
-      })
-    }
-  },
-
-  mounted () {
-    this.createChart()
-  },
-
-  beforeDestroy () {
-    this.chart.destroy()
   }
 }
 </script>

@@ -15,8 +15,10 @@
   },
   "dependencies": {
     "chart.js": "^2.7.1",
+    "highcharts": "^6.0.4",
     "vue": "^2.2.2",
     "vue-chart-js": "^1.4.1",
+    "vue-highcharts": "0.0.10",
     "vue-router": "^2.3.0",
     "vuex": "^2.3.0",
     "vuex-router-sync": "^4.1.2"

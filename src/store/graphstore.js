@@ -6,9 +6,11 @@ export default {
         getDataPoints: state => state.datapoints
     },
     mutations: {
-        addPoint: (state, no) => state.datapoints.push(no)         
+        addPoint: (state, no) => {
+            state.datapoints.push(no);
+        }         
     },
     actions: {
-        addPointAsync: ({commit}, no) => commit('addPoint', no)
+        addPointAsync: ({commit}, no) => commit('addPoint', parseInt(no))
     }
 }
