@@ -1,5 +1,7 @@
 <template>
-  <highcharts :options="options" ref="highcharts"></highcharts>
+  <div>
+    <highcharts :options="options" ref="highcharts"></highcharts>
+  </div>
 </template>
 
 <script>
@@ -11,6 +13,7 @@ Vue.use(VueHighcharts);
 export default {
   data () {
     return {
+      datalimit: 20,
       options : {
         type: 'spline',
         marginRight: 10,
@@ -62,7 +65,7 @@ export default {
   watch: {
     getDataPoints (dps) {
       console.log(this.$refs.highcharts.chart.series[0].addPoint);
-      let shift = dps.length > 20;
+      let shift = dps.length > this.datalimit;
       this.$refs.highcharts.chart.series[0].addPoint([(new Date()).getTime(), dps[dps.length-1]], true, shift);
     }
   }
