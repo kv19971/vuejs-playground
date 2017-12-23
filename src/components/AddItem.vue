@@ -22,7 +22,7 @@ export default {
             let max = 15;
             let min = 0;
             this.addPointAsync(Math.random() * (max - min) + min);        
-        }, 3000)
+        }, 500)
     },
 }
 </script>
