@@ -4,18 +4,14 @@
 
 <script>
 import Vue from 'vue'
+import {mapGetters} from 'vuex'
 import VueHighcharts from 'vue-highcharts';
 Vue.use(VueHighcharts);
 
 export default {
-  components: {
-    VueHighcharts
-  },
-  computed: {
-    
-    options () {
-      let dps = this.$store.getters.getDataPoints;
-      return {
+  data () {
+    return {
+      options : {
         title: {
           text: 'Monthly Average Temperature',
           x: -20 //center
@@ -25,7 +21,7 @@ export default {
           x: -20
         },
         xAxis: {
-          categories: dps.map((val, i) => i)
+          categories: []
         },
         yAxis: {
           title: {
@@ -48,10 +44,29 @@ export default {
         },
         series: [{
           name: 'Somedata',
-          data: dps
+          data: []
         }]
       }
     }
+  },
+  name: "ChartWrapper",
+  components: {
+    VueHighcharts
+  },
+  computed: mapGetters(['getDataPoints']),
+  watch: {
+    getDataPoints (dps) {
+      console.log(this.$refs.highcharts.chart.series[0].addPoint);
+      this.$refs.highcharts.chart.series[0].addPoint([dps.length - 1, dps[dps.length-1]]);
+    }
   }
+  // computed: {
+    
+  //   options () {
+  //     console.log(this.$refs.highcharts === undefined ? undefined : this.$refs.highcharts.chart.series[0])
+  //     let dps = this.$store.getters.getDataPoints;
+      
+  //   }
+  // }
 }
 </script>
